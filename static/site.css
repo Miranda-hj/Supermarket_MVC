@@ -1,0 +1,105 @@
+.container {
+	width: 1000px;
+	background-color: #f4f7f8;
+	padding: 10px 0;
+	box-sizing: border-box;
+	border: solid black 2px;
+	margin-left: 20%;
+	padding-bottom: 20px;
+}
+
+div {
+	padding: 15px;
+}
+
+h1 {
+	text-align: center;
+	padding-bottom: 10px;
+}
+
+.form-group {
+	display: inline;
+}
+
+#cardNum {
+	padding-left: 37%;
+}
+
+#unit {
+	margin-bottom: 20px;
+}
+button {
+	width: 23%;
+	margin-left: 8px;
+}
+
+#display-detail {
+	float: right;
+}
+
+#itemType {
+	width: 12%;
+}
+
+#itemInfo {
+	display: flex;
+	justify-content: space-between;
+}
+
+#totalCost {
+	display: inline;
+	float: right;
+}
+
+#unitItem {
+	width: 23%;
+	float: left;
+}
+
+#weightItem {
+	position: absolute;
+	left: 593px;
+	top: 443px;
+	width: 14%;
+}
+
+#unitNumber,
+#weightNumber {
+	width: 50px;
+}
+
+#pricePerUnit,
+#pricePerKilo {
+	margin-top: 10px;
+	width: 70px;
+}
+
+#itemPrice {
+	display: inline;
+}
+
+#classGroup {
+	width: 40%;
+	margin-left: 65%;
+}
+
+#checkDisplay {
+	resize: none;
+	width: 280px;
+	height: 100px;
+}
+
+label#messageBox {
+	margin: 5px 0px 5px 6px;
+}
+
+#display {
+	margin: 5px 0px 0px 7px;
+	width: 894px;
+	height: 81px;
+	resize: none;
+}
+
+#messageBox {
+	margin: 7px 0px 5px 6px;
+}
