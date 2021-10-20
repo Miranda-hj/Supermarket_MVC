@@ -9,7 +9,6 @@ class Supermarket:
     #constructor
     def __init__(self) -> None:
         self.customerList = []
-        self.shoppingCart = []
 
     #getter for the list of customers
     @property 
@@ -35,41 +34,70 @@ class Supermarket:
                 return customer.CardNumber
         return None
 
+    #get the current club points for a given customer
+    def currentClubPoint(self,cname:str) ->int:
+        customer = self.findCustomer(cname)
+        point = customer.calcClubPoint()
+        print('current!!!!!',point)
+        return point
+
     # gets the club point for a selected customer 
     def getCustomerClubPoint(self, cname:str) -> int:
-        for customer in self.customerList == cname:
-            if customer.CustomerName == cname:
-                print (customer.ClubPoint)
+        customer = self.findCustomer(cname)
+        point = customer.ClubPoint
+        print ("total @@@@@@@",point)
+        return point
 
-    # adds unit item to the customer's current cart and returns the cost
-    def addCustUnitItem(self, cname:str, prod:str, price:float, qty:int) -> float:
-        pass
+    # adds unit item to the customer's current cart
+    def addCustUnitItem(self,cname:str, prod:str, price:float, qty:int) -> None:
+        customer = self.findCustomer(cname)
+        item = customer.CurrentCart
+        item.addUnitItem(prod,price,qty)
 
-    # adds weight item to the customer's current cart and returns the cost
+    # adds weight item to the custoer's current cart and returns the weight
     def addCustWeightItem(self, cname:str, prod:str, price:float) -> float:
-        pass
+        customer = self.findCustomer(cname)
+        item = customer.CurrentCart
+        weight = item.addWeightItem(prod,price) / price
+        weightItem = round(weight,2)
+        print("123",weightItem)
+        return weightItem
+        
 
     # calculates customer's current cart total
     def calcCustCartTotal(self, cname:str) -> float:
-        pass
+        customer = self.findCustomer(cname)
+        cart = customer.CurrentCart
+        total = cart.calcTotalCost()
+        return total
 
     # adds the current cart to the customer's cart list
     def addCustCart(self, cname:str) -> None:
-        pass
+        customer = self.findCustomer(cname)
+        print(customer)
+        customer.addToCartList()
+        print("22222222222")
 
     # customer starts shopping with an empty cart
     def startShopping(self, cname:str) -> None:
-         for customer in self.customerList == cname:
-            if customer.CustomerName == cname:
-                pass
+        customer = self.findCustomer(cname)
+        customer.CurrentCart
 
     #calculates total sales for the supermarket
     def calcTotalSales(self) -> float:
-        pass
+        for customer in self.customerList:
+            cusName = Customer(customer)
+            totalSales = cusName.updateTotal()
+            print('3',totalSales)
+            return totalSales
 
     # gets the list of customers and their transactions 
     def listCustomerTransaction(self) -> str:
-        pass
+        print("step1")
+        for customer in self.customerList:
+            list = customer.custDetailTrans()
+            print(list)
+            return list
 
     #finds customer with the most purchase
     def findTopCustomer(self) -> str:
@@ -80,6 +108,7 @@ class Supermarket:
         pass
 
     # displays transaction details for a customer
-    def getCustomerTransDetail(self, nm:str) -> str:
-        pass
+    def getCustomerTransDetail(self, cname:str) -> str:
+        customer = self.findCustomer(cname)
+        customer.custDetailTrans()
 

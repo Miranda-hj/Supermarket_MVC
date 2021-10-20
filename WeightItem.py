@@ -6,7 +6,7 @@ class WeightItem(Item):
 
     #constructor for UnitItem
     def __init__(self, prodName:str, price:float) -> None:
-        self._myWeight = self.scale()
+        self._myWeight = 0.00
         Item.__init__(self,prodName,price)
         
     #getter and setter for myWeight
@@ -24,10 +24,16 @@ class WeightItem(Item):
 
     #represents the class object as a string
     def __str__(self) -> str:
-        return self._myProdName + self._myPrice + self._myWeight 
+        return self._myProdName + " " + str(self._myPrice) + " " + str(self._myWeight) + " " + str(self._myWeight * self._myPrice)
 
     #method to generate random number between 0.0 and 4.0
     def scale (self) -> float:
         weight = round(random.uniform(0.0,4.00),2)
-        return weight
+        self._myWeight = weight
+        return self._myWeight
 
+x = WeightItem('1',1)
+x.scale()
+
+y = x.ProductWeight
+print(y)

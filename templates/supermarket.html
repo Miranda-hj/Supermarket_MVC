@@ -27,73 +27,76 @@
                         </select>
                     </div>
                     <div class="form-group" id="cardNum">
-                        <label for="cardName">Card Number:</label>
-                        <input type="text" name="cardName" id="cardName" {% for id in customerNumberList %}
-                            value="{{id}}" {% endfor %} readonly>
+                        <label for="cardNumber">Card Number:</label>
+                        {% if id %}
+                        <input type="text" name="cardNumber" id="cardNumber" value="{{id[0]}}" readonly>
+                        {% endif %}
                     </div>
                     <div>
-                        <button id="startShopping">Start Shopping</button>
-                        <button id="nextCustomer">Next Customer</button>
-                        <button id="exit">Exit</button>
-                        <button id="customerInfo" type="button">Customer Information</button>
+                        <button type="button" id="startShopping">Start Shopping</button>
+                        <button type="button" id="nextCustomer">Next Customer</button>
+                        <button type="button" id="exit">Exit</button>
+                        <button type="button" id="customerInfo">Customer Information</button>
                     </div>
                 </fieldset>
             </div>
             <div id="transcation">
                 <fieldset>
                     <legend>Transcation</legend>
-                    <label for="Product Name">Product Name: </label>
-                    <input type="text" name="ProdName" id="ProdName">
-                    <div id="itemInfo">
-                        <fieldset id="itemType">
-                            <legend>Item Type</legend>
-                            <input type="radio" name="item" value="Unit Item">
-                            <label>Unit Item</label>
-                            <input type="radio" name="item" value="Weight Item">
-                            <label>Weight Item</label>
-                        </fieldset>
-                        <input type="text" id="checkDisplay" name="checkDisplay" readonly></input>
-                    </div>
-                    <div id="itemPrice">
-                        <div id="unitItem">
-                            <fieldset>
-                                <legend>Unit Item</legend>
-                                <label for="unitNumber">Number of Units: </label>
-                                <input type="number" id="unitNumber" min="1">
-                                <label for="pricePerUnit">Price of Unit: </label>
-                                <input type="number" step="0.01" min="0.00" id="pricePerUnit">
+                    <div id="shoppingCart">
+                        <label for="Product Name">Product Name: </label>
+                        <input type="text" name="ProdName" id="ProdName">
+                        <div id="itemInfo">
+                            <fieldset id="itemType">
+                                <legend>Item Type</legend>
+                                <input type="radio" name="item" id="unit" value="Unit Item">
+                                <label>Unit Item</label>
+                                <input type="radio" name="item" id="weight" value="Weight Item">
+                                <label>Weight Item</label>
                             </fieldset>
+                            <textarea id="checkDisplay" name="checkDisplay" readonly></textarea>
                         </div>
-                        <div id="weightItem">
-                            <fieldset>
-                                <legend>Weight Item</legend>
-                                <label for="weightNumber">Total Weight: </label>
-                                <input type="number" id="weightNumber">
-                                <label for="pricePerKilo">Price of Kilo: </label>
-                                <input type="number" step="0.01" min="0.00" id="pricePerKilo">
-                            </fieldset>
+                        <div id="itemPrice">
+                            <div id="unitItem">
+                                <fieldset>
+                                    <legend>Unit Item</legend>
+                                    <label for="unitNumber">Number of Units: </label>
+                                    <input type="number" id="unitNumber" min="1">
+                                    <label for="pricePerUnit">Price of Unit: </label>
+                                    <input type="number" step="0.01" min="0.00" id="pricePerUnit">
+                                </fieldset>
+                            </div>
+                            <div id="weightItem">
+                                <fieldset>
+                                    <legend>Weight Item</legend>
+                                    <label for="weightNumber">Total Weight: </label>
+                                    <input type="number" id="weightNumber" readonly>
+                                    <label for="pricePerKilo">Price of Kilo: </label>
+                                    <input type="number" step="0.01" min="0.01" id="pricePerKilo">
+                                </fieldset>
+                            </div>
                         </div>
-                    </div>
-                    <div id="classGroup">
-                        <button>Add to Car</button>
-                        <button id="newItem">New Item</button>
-                        <button>Check Out</button>
-                    </div>
-                    <div id="totalCost">
-                        <label for="cost">Total Cost: </label>
-                        <input type="number" id="cost" value="" readonly>
+                        <div id="classGroup">
+                            <button type="button" id="addCar">Add to Car</button>
+                            <button type="button" id="newItem">New Item</button>
+                            <button type="button" id="checkOut">Check Out</button>
+                        </div>
+                        <div id="totalCost">
+                            <label for="cost">Total Cost: </label>
+                            <input type="text" id="cost" readonly>
+                        </div>
                     </div>
                 </fieldset>
             </div>
             <div id="summary">
                 <fieldset>
                     <legend>Summary</legend>
-                    <button>Sales by Customer</button>
-                    <button>Total Sales</button>
-                    <button>Top Customer</button>
-                    <button>Average Cart</button>
-                    <legend id="messageBox">Message Box:</legend>
-                    <input type="text" id="display" value="11"></input>
+                    <button type="button" id="salesByCustomer">Sales by Customer</button>
+                    <button type="button" id="total">Total Sales</button>
+                    <button type="button">Top Customer</button>
+                    <button type="button">Average Cart</button>
+                    <legend id="#messageBoxmessageBox">Message Box:</legend>
+                    <textarea id="display" name="display" readonly></textarea>
                 </fieldset>
 
             </div>

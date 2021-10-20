@@ -21,4 +21,4 @@ class UnitItem(Item):
 
     #represents the class object as a string
     def __str__(self) -> str:
-        return self._myProdName + self._myPrice + self.myQuanity
+        return self._myProdName + " " + str(self._myPrice) + " " + str(self.myQuanity) + " " + str(self._myPrice * self.myQuanity)

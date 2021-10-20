@@ -6,6 +6,7 @@ class Item (ABC):
     def __init__(self, prodName:str, price:float) -> None:
         self._myProdName = prodName
         self._myPrice = price
+
     
     #getter and setter for myProdName
     @property

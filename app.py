@@ -2,8 +2,9 @@
 # from tkinter import Frame, ttk
 # from tkinter.messagebox import showinfo
 # from tkinter.constants import END, LEFT, TOP
-from flask import Flask, render_template,request,jsonify
+from flask import Flask, render_template,request,jsonify,Response
 from Supermarket import Supermarket
+from WeightItem import WeightItem
 
 market = Supermarket()
 
@@ -26,62 +27,85 @@ def superMarket():
         for cName in customerName:
             market.addCustomer(cName)
             id = market.getCustomerID(cName)
-            customerNumberList.append(id)
-        # close file      
+            customerNumberList.append(id) 
         f_customer.close()
     except:
         print("Error")
-    return render_template('supermarket.html', customer = market.customerList, 
-    shoppingCart = market.shoppingCart, customerName = customerName, customerNumberList = customerNumberList )
+    return render_template('supermarket.html', customerName = customerName, id = customerNumberList )
 
+
+@app.route('/selectCustomer',methods = ['POST'])
+def selectCustomer():
+     customer = request.form['name']
+     customerID = market.getCustomerID(customer)
+     return jsonify({"cardNumber": customerID})
 
 @app.route('/startShopping',methods = ['POST'])
 def startShopping():
-    pass
-
-@app.route('/nextCustomer',methods = ['POST'])
-def nextCustomer():
-    pass
-
-@app.route('/exit',methods = ['POST'])
-def exit():
-    pass
+    cusName = request.form['name']
+    market.startShopping(cusName)
+    return jsonify()
 
 @app.route('/customerInfo',methods = ['POST'])
 def customerInfo():
-    pass
+    customer = str(request.form.get('customerName'))
+    print(customer)
+    customerID = market.getCustomerID(customer)
+    customerClubPoint = market.getCustomerClubPoint(customer)
+    DetailTrans = customer.getCustomerTransDetail(customer)
+    totalCost = customer.updateTotal()
+    customerInfoDetail = str(customer + customerID + customerClubPoint + totalCost + "\n" + DetailTrans)
+    return render_template('supermarket.html', customerInfoDetail =customerInfoDetail )
 
-@app.route('/ddtoCart',methods = ['POST'])
+
+@app.route('/addtoCart',methods = ['POST'])
 def addtoCart():
-    cName = request.form.get('customerName')
-    prodName = request.form.get('ProdName')
+    cName = str(request.form['customerName'])
+    prodName = str(request.form['ProdName'])
     try: 
-        qty = request.form.get('unitNumber')
-        price = request.form.get('pricePerUnit')
+        qty = int(request.form['unitNumber'])
+        price = float(request.form['pricePerUnit'])
         market.addCustUnitItem(cName, prodName, price, qty)
+        message = prodName + ' $' + str(round(price*qty,2))
+        print(message)
     except:
-        price = request.form.get('pricePerKilo')
-        market.addCustWeightItem(cName, prodName, price)
-    else:
-        print("Error")
-    
-
-@app.route('/newItem',methods = ['POST'])
-def newItem():
-    pass
+        price = float(request.form['pricePerKilo'])
+        weight = market.addCustWeightItem(cName, prodName, price)
+        message = prodName + ' $' + str(round(price*weight,2))
+        print('xxsw',weight)
+        print(message)
+        return jsonify({'weight':weight,"message": message})
+    return jsonify({"message": message})
+     
 
 @app.route('/checkOut',methods = ['POST'])
 def checkOut():
-    cName = request.form.get('customerName')
-    market.calcCustCartTotal(cName)
+    cName = str(request.form['name'])
+    total = market.calcCustCartTotal(cName)
+    market.addCustCart(cName)
+    customer = market.findCustomer(cName)
+    customer.updateClubPoint()
+    currentPoint = market.currentClubPoint(cName)
+    currentPointMessage = "Club Point Earned " + str(currentPoint)
+    print(currentPointMessage)
+    TotalPoint = market.getCustomerClubPoint(cName)
+    TotalPointMessage = "New Club Point " + str(TotalPoint)
+    print(TotalPointMessage)
+    return jsonify({'totalCost':total,"currentPoint":currentPointMessage,"TotalPoint":TotalPointMessage})
 
-@app.route('/salesbyCustomer',methods = ['POST'])
+
+@app.route('/salesByCustomer',methods = ['POST'])
 def salesByCustomer():
-    pass
+    detail = market.listCustomerTransaction()
+    message = str(detail)
+    print('customer:',detail)
+    return jsonify({'message':message})
 
 @app.route('/totalSales',methods = ['POST'])
 def totalSales():
-    pass
+    total = market.calcTotalSales()
+    print ("total",total)
+    return jsonify()
 
 @app.route('/topCustomer',methods = ['POST'])
 def topCustomer():
