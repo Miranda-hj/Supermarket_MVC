@@ -12,6 +12,7 @@ class ShoppingCart:
         self._shoppingDate = datetime.now().strftime('%m/%d/%Y %H:%M:%S')
         self._list = []
         self._cartTotal = 0.00
+        self._cartPoint = 0.00
 
     #getter for purchase date
     @property
@@ -27,11 +28,10 @@ class ShoppingCart:
     def cartTotal(self) -> float:
         return self._cartTotal
 
-
     @cartTotal.setter
-    def cartTotal(self,value) ->float:
+    def cartTotal(self,value) -> None:
         self._cartTotal = value
-
+    
     #represents the class object as a string
     def __str__(self) -> str:
         return self._shoppingDate + " $" + str(self._cartTotal)
@@ -40,13 +40,14 @@ class ShoppingCart:
     def addUnitItem(self, prod:str, uprice:float, qty:int) -> float:
         item = UnitItem(prod,uprice,qty)
         self._list.append(item)
+        for x in self._list:
+            print(type(x))
+            print('HEllo',x)
         cost = item.calcCost()
         preCost = self.cartTotal
-        print(preCost)
         totalCost = preCost + cost
         print(totalCost)
-        self.cartTotal = totalCost
-        
+        self.cartTotal = totalCost 
         return cost
 
     #adds weight item to the cart and returns the cost
@@ -62,9 +63,12 @@ class ShoppingCart:
         print(preCost)
         totalCost = preCost + cost
         self.cartTotal = totalCost
-        print('uuuu',totalCost)
         return cost
 
     #calculate the total cost of the items in the cart
     def calcTotalCost(self) -> float:
-        return self._cartTotal
+        cost = self.cartTotal
+        print('cost',cost)
+        return cost
+    
+        

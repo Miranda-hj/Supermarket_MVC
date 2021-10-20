@@ -2,9 +2,9 @@
 # from tkinter import Frame, ttk
 # from tkinter.messagebox import showinfo
 # from tkinter.constants import END, LEFT, TOP
-from flask import Flask, render_template,request,jsonify,Response
+from flask import Flask, render_template,request,jsonify
 from Supermarket import Supermarket
-from WeightItem import WeightItem
+from Customer import Customer
 
 market = Supermarket()
 
@@ -18,7 +18,7 @@ def superMarket():
     try: 
         customerName = []
         customerNumberList = []
-        f_customer = open('./asessment_part_2/Customers.txt','r')
+        f_customer = open('./asessment_part_2/SUpermarket_MVC/Customers.txt','r')
         customer = f_customer.readlines()
         for name in customer:
             customerList = name.replace('\n', '')
@@ -43,6 +43,7 @@ def selectCustomer():
 @app.route('/startShopping',methods = ['POST'])
 def startShopping():
     cusName = request.form['name']
+    print('customer:',cusName)
     market.startShopping(cusName)
     return jsonify()
 
@@ -55,8 +56,7 @@ def customerInfo():
     DetailTrans = customer.getCustomerTransDetail(customer)
     totalCost = customer.updateTotal()
     customerInfoDetail = str(customer + customerID + customerClubPoint + totalCost + "\n" + DetailTrans)
-    return render_template('supermarket.html', customerInfoDetail =customerInfoDetail )
-
+    return jsonify()
 
 @app.route('/addtoCart',methods = ['POST'])
 def addtoCart():
@@ -68,6 +68,7 @@ def addtoCart():
         market.addCustUnitItem(cName, prodName, price, qty)
         message = prodName + ' $' + str(round(price*qty,2))
         print(message)
+        print('tttttttttttttttttttt',Customer(cName))
     except:
         price = float(request.form['pricePerKilo'])
         weight = market.addCustWeightItem(cName, prodName, price)
@@ -83,8 +84,6 @@ def checkOut():
     cName = str(request.form['name'])
     total = market.calcCustCartTotal(cName)
     market.addCustCart(cName)
-    customer = market.findCustomer(cName)
-    customer.updateClubPoint()
     currentPoint = market.currentClubPoint(cName)
     currentPointMessage = "Club Point Earned " + str(currentPoint)
     print(currentPointMessage)
@@ -104,7 +103,6 @@ def salesByCustomer():
 @app.route('/totalSales',methods = ['POST'])
 def totalSales():
     total = market.calcTotalSales()
-    print ("total",total)
     return jsonify()
 
 @app.route('/topCustomer',methods = ['POST'])

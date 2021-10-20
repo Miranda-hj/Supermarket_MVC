@@ -31,9 +31,3 @@ class WeightItem(Item):
         weight = round(random.uniform(0.0,4.00),2)
         self._myWeight = weight
         return self._myWeight
-
-x = WeightItem('1',1)
-x.scale()
-
-y = x.ProductWeight
-print(y)

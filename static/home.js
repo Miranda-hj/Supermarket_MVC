@@ -1,13 +1,12 @@
 $(document).ready(function() {
-	$('#shoppingCart').hide();
 	$('input[type="radio"]').click(function() {
 		let inputValue = $(this).attr('value');
 		if (inputValue == 'Unit Item') {
-			$('div#weightItem').hide();
-			$('div#unitItem').show();
+			$('div#weightItem').css('visibility', 'hidden');
+			$('div#unitItem').css('visibility', 'visible');
 		} else {
-			$('div#unitItem').hide();
-			$('div#weightItem').show();
+			$('div#unitItem').css('visibility', 'hidden');
+			$('div#weightItem').css('visibility', 'visible');
 		}
 	});
 
@@ -15,8 +14,8 @@ $(document).ready(function() {
 		$('input').val('');
 		$('textarea').val('');
 		$('input[type="radio"]').prop('checked', false);
-		$('div#weightItem').show();
-		$('div#unitItem').show();
+		$('div#weightItem').css('visibility', 'visible');
+		$('div#unitItem').css('visibility', 'visible');
 	});
 
 	$('#exit').click(function() {
@@ -36,7 +35,6 @@ $(document).ready(function() {
 	});
 
 	$('#startShopping').click(function(event) {
-		$('#shoppingCart').show();
 		if ($('#customerName').val() !== '' && $('#cardNumber').val() !== ''){
 			$.ajax({
 				type: 'POST',
@@ -89,7 +87,7 @@ $(document).ready(function() {
 			success: function(data) {
 				$('#cost').val('$ ' + data.totalCost);
 				$('#checkDisplay').val(function(_, val) {
-					return val + data.currentPoint + '\n' + data.TotalPoint;
+					return val + data.currentPoint + '\n' + data.TotalPoint + '\n';
 				});
 			}
 		});

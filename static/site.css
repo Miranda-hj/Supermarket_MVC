@@ -33,6 +33,11 @@ button {
 	margin-left: 8px;
 }
 
+#classGroup button {
+	width: 27%;
+	margin-left: 8px;
+}
+
 #display-detail {
 	float: right;
 }
@@ -56,11 +61,15 @@ button {
 	float: left;
 }
 
+#unitItem {
+	width: 26%;
+	float: left;
+	margin-left: -12px;
+}
+
 #weightItem {
-	position: absolute;
-	left: 593px;
-	top: 443px;
-	width: 14%;
+	width: 24%;
+	margin-left: 6%;
 }
 
 #unitNumber,
@@ -75,22 +84,17 @@ button {
 }
 
 #itemPrice {
-	display: inline;
+	display: flex;
 }
 
 #classGroup {
-	width: 40%;
-	margin-left: 65%;
+	width: 120%;
 }
 
 #checkDisplay {
 	resize: none;
-	width: 280px;
+	width: 310px;
 	height: 100px;
-}
-
-label#messageBox {
-	margin: 5px 0px 5px 6px;
 }
 
 #display {
