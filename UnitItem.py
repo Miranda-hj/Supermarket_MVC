@@ -18,7 +18,11 @@ class UnitItem(Item):
     #calculates cost of the unit item
     def calcCost(self) -> float:
         return self._myPrice * self.myQuanity
+        
+    #display the item information
+    def displayUnitItem(self) -> str:
+        return self._myProdName + " $" + str(self._myPrice) + " " + str(self.myQuanity) + " $" + str(self._myPrice * self.myQuanity)
 
     #represents the class object as a string
     def __str__(self) -> str:
-        return self._myProdName + " " + str(self._myPrice) + " " + str(self.myQuanity) + " " + str(self._myPrice * self.myQuanity)
+        return str(self._myProdName + " $" + str(self._myPrice) + " " + str(self.myQuanity) + " $" + str(self._myPrice * self.myQuanity))

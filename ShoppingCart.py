@@ -11,8 +11,7 @@ class ShoppingCart:
     def __init__(self) -> None:
         self._shoppingDate = datetime.now().strftime('%m/%d/%Y %H:%M:%S')
         self._list = []
-        self._cartTotal = 0.00
-        self._cartPoint = 0.00
+        self._totalCost = 0
 
     #getter for purchase date
     @property
@@ -26,49 +25,41 @@ class ShoppingCart:
 
     @property
     def cartTotal(self) -> float:
-        return self._cartTotal
+        return self._totalCost
 
     @cartTotal.setter
-    def cartTotal(self,value) -> None:
-        self._cartTotal = value
+    def cartTotal(self,value):
+        self._totalCost = value
     
     #represents the class object as a string
     def __str__(self) -> str:
-        return self._shoppingDate + " $" + str(self._cartTotal)
+        return self._shoppingDate + " $"  + str(self._totalCost) + "  \n       " +  " ".join([str(item) for item in self._list]) + "\n"
 
     #adds unit item to the cart and returns the cost
     def addUnitItem(self, prod:str, uprice:float, qty:int) -> float:
         item = UnitItem(prod,uprice,qty)
-        self._list.append(item)
-        for x in self._list:
-            print(type(x))
-            print('HEllo',x)
+        string = item.displayUnitItem()
+        print(string)
+        self._list.append(string)
         cost = item.calcCost()
-        preCost = self.cartTotal
-        totalCost = preCost + cost
-        print(totalCost)
-        self.cartTotal = totalCost 
-        return cost
+        self._totalCost = self._totalCost + cost
+        print("total",self.cartTotal) 
+        print(self.__str__())
+        return self.__str__()
 
     #adds weight item to the cart and returns the cost
     def addWeightItem(self, prod:str, wprice:float) -> float:
         item = WeightItem(prod,wprice)
         item.scale()
-        weight = item.ProductWeight
-        print('weight:',weight)
+        # weight = item.ProductWeight
         self._list.append(item)
         cost = round(item.calcCost(),2)
-        print('cost',cost)
         preCost = self.cartTotal
-        print(preCost)
         totalCost = preCost + cost
         self.cartTotal = totalCost
-        return cost
+        return self.__str__()
 
     #calculate the total cost of the items in the cart
     def calcTotalCost(self) -> float:
-        cost = self.cartTotal
-        print('cost',cost)
-        return cost
-    
+        return self.cartTotal
         

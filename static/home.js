@@ -35,19 +35,31 @@ $(document).ready(function() {
 	});
 
 	$('#startShopping').click(function(event) {
-		if ($('#customerName').val() !== '' && $('#cardNumber').val() !== ''){
+		if ($('#customerName').val() !== '' && $('#cardNumber').val() !== '') {
 			$.ajax({
 				type: 'POST',
 				url: 'http://127.0.0.1:5000/startShopping',
 				data: { name: $('#customerName').val() }
 			});
-			event.preventDefault();}
-		else{
-			alert('Invalid Input')
+			event.preventDefault();
+		} else {
+			alert('Invalid Input');
 		}
 	});
 
-	$('#newItem').on('click', function() {
+	$('#customerInfo').click(function(event) {
+		$.ajax({
+			type: 'POST',
+			url: 'http://127.0.0.1:5000/customerInfo',
+			data: { customerName: $('#customerName').val() },
+			success: function(data) {
+				$('#display').val(data.message);
+			}
+		});
+		event.preventDefault();
+	});
+
+	$('#newItem').click(function() {
 		$('#weightNumber').val('');
 		$('#pricePerKilo').val('');
 		$('#unitNumber').val('');
@@ -97,7 +109,10 @@ $(document).ready(function() {
 	$('#total').click(function(event) {
 		$.ajax({
 			type: 'POST',
-			url: 'http://127.0.0.1:5000/totalSales'
+			url: 'http://127.0.0.1:5000/totalSales',
+			success: function(data) {
+				$('#display').val(data.total);
+			}
 		});
 		event.preventDefault();
 	});
@@ -107,11 +122,42 @@ $(document).ready(function() {
 			type: 'POST',
 			url: 'http://127.0.0.1:5000/salesByCustomer',
 			success: function(data) {
-				$('#display').val(function(_, val) {
-					return val + data.message + '\n';
-				});
+				$('#display').val(data.message);
 			}
 		});
 		event.preventDefault();
 	});
+
+	$('#topCustomer').click(function(event) {
+		$.ajax({
+			type: 'POST',
+			url: 'http://127.0.0.1:5000/topCustomer',
+			success: function(data) {
+				$('#display').val(data.message);
+			}
+		});
+		event.preventDefault();
+	});
+
+	$('#average').click(function(event) {
+		$.ajax({
+			type: 'POST',
+			url: 'http://127.0.0.1:5000/averageCart',
+			success: function(data) {
+				$('#display').val(data.message);
+			}
+		});
+		event.preventDefault();
+	});
+
+	$('#selectMonth').change(function(event) {
+		$.ajax({
+			type: 'POST',
+			url: 'http://127.0.0.1:5000//monthlyDisplay',
+			success: function(data) {
+				$('#display').val('');
+			}
+		});
+		event.preventDefault();
+	})
 });

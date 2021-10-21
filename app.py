@@ -49,14 +49,15 @@ def startShopping():
 
 @app.route('/customerInfo',methods = ['POST'])
 def customerInfo():
-    customer = str(request.form.get('customerName'))
+    customer = request.form['customerName']
     print(customer)
     customerID = market.getCustomerID(customer)
     customerClubPoint = market.getCustomerClubPoint(customer)
-    DetailTrans = customer.getCustomerTransDetail(customer)
-    totalCost = customer.updateTotal()
-    customerInfoDetail = str(customer + customerID + customerClubPoint + totalCost + "\n" + DetailTrans)
-    return jsonify()
+    DetailTrans = market.getCustomerTransDetail(customer)
+    totalCost = market. getCustomerClubPoint(customer)*10
+    message = customer + " " +  str(customerID) + " " + str(customerClubPoint) + " " +  str(totalCost) + "\n   " + str(DetailTrans)
+    return jsonify({"message": message})
+
 
 @app.route('/addtoCart',methods = ['POST'])
 def addtoCart():
@@ -67,14 +68,10 @@ def addtoCart():
         price = float(request.form['pricePerUnit'])
         market.addCustUnitItem(cName, prodName, price, qty)
         message = prodName + ' $' + str(round(price*qty,2))
-        print(message)
-        print('tttttttttttttttttttt',Customer(cName))
     except:
         price = float(request.form['pricePerKilo'])
         weight = market.addCustWeightItem(cName, prodName, price)
         message = prodName + ' $' + str(round(price*weight,2))
-        print('xxsw',weight)
-        print(message)
         return jsonify({'weight':weight,"message": message})
     return jsonify({"message": message})
      
@@ -86,10 +83,8 @@ def checkOut():
     market.addCustCart(cName)
     currentPoint = market.currentClubPoint(cName)
     currentPointMessage = "Club Point Earned " + str(currentPoint)
-    print(currentPointMessage)
     TotalPoint = market.getCustomerClubPoint(cName)
     TotalPointMessage = "New Club Point " + str(TotalPoint)
-    print(TotalPointMessage)
     return jsonify({'totalCost':total,"currentPoint":currentPointMessage,"TotalPoint":TotalPointMessage})
 
 
@@ -103,14 +98,21 @@ def salesByCustomer():
 @app.route('/totalSales',methods = ['POST'])
 def totalSales():
     total = market.calcTotalSales()
-    return jsonify()
+    return jsonify({'total':total})
 
 @app.route('/topCustomer',methods = ['POST'])
 def topCustomer():
-    pass
+    message = market.findTopCustomer()
+    return jsonify({'message':message})
 
 @app.route('/averageCart',methods = ['POST'])
 def averageCart():
+    message = market.getCustAvg()
+    return jsonify({'message':message})
+
+@app.route('/monthlyDisplay',methods = ['POST'])
+def monthlyDisplay():
+    market.displayMonthlyCost()
     pass
 
 if __name__ == '__main__':

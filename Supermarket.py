@@ -60,8 +60,7 @@ class Supermarket:
     # adds weight item to the custoer's current cart and returns the weight
     def addCustWeightItem(self, cname:str, prod:str, price:float) -> float:
         customer = self.findCustomer(cname)
-        item = customer.CurrentCart
-        weight = item.addWeightItem(prod,price) / price
+        weight = customer.addWegihtItemToCart(prod,price) / price
         weightItem = round(weight,2)
         print("123",weightItem)
         return weightItem
@@ -100,9 +99,9 @@ class Supermarket:
 
     # gets the list of customers and their transactions 
     def listCustomerTransaction(self) -> str:
+        print("12222222",self.customerList)
         for customer in self.customerList:
-            print('customre',customer)
-            print(self.customerList)
+            print(customer)
             list = customer.custDetailTrans()
             print(list)
             return list
@@ -120,3 +119,5 @@ class Supermarket:
         customer = self.findCustomer(cname)
         customer.custDetailTrans()
 
+    def displayMonthlyCost(self):
+        pass

@@ -1,12 +1,12 @@
+import pytest
 
+class Supermarket:
+    def addCustomer(self, cname:str):
+        pass
 
-
-x = []
-i = str('2 3 5')
-print(i)
-x.append(i)
-print(x)
-
-w = str('1 4 7')
-x.append(w)
-print(x)
+customerDetial = "".join([str(customer) for customer in self.customerList]).replace(" \n", "\n").split("\n")
+        print(customerDetial)
+        for list in 
+        list = customerDetial.custDetailTrans()
+        print(list)
+        return list

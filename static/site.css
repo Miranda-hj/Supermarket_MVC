@@ -4,7 +4,7 @@
 	padding: 10px 0;
 	box-sizing: border-box;
 	border: solid black 2px;
-	margin-left: 20%;
+	margin: auto;
 	padding-bottom: 20px;
 }
 
@@ -99,11 +99,20 @@ button {
 
 #display {
 	margin: 5px 0px 0px 7px;
-	width: 894px;
+	width: 97%;
 	height: 81px;
 	resize: none;
 }
 
 #messageBox {
 	margin: 7px 0px 5px 6px;
+}
+
+#month {
+	margin-left: 20px;
+}
+
+#summary button {
+	width: 15%;
+	margin-left: 8px;
 }

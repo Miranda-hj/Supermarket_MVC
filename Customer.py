@@ -53,20 +53,20 @@ class Customer:
 
     #represents the class object as a string
     def __str__(self) -> str:
-        return str(self.CustomerName) + " " + str(self.myCardNumber) + str(self.myTotal)
+        return str(self.CustomerName) + " " + str(self.myCardNumber) + " " + str(self.myTotal) + " " + " ".join([str(cart) for cart in self.myCurrentCart])+ "\n"
 
     #add unit item to cart
     def addUnitItemToCart(self, prod:str, uprice:float, qty:int):
-        ShoppingCart().addUnitItem(prod, uprice, qty)
-        s = ShoppingCart().__str__()
-        print('hope!!!!!!!!!!!',s)
+        s = ShoppingCart().addUnitItem(prod, uprice, qty)  
+        print('strstrstrs',s)
         self.myCurrentCart.append(s)
         print(self.myCurrentCart)
         
     #add weight item to cart
     def addWegihtItemToCart(self, prod:str, wprice:float):
-        ShoppingCart().addWeightItem(prod, wprice)
+        w = ShoppingCart().addWeightItem(prod, wprice)
         self.myCurrentCart.append(ShoppingCart())
+        return w
 
 
     #add current cart to the list of carts
@@ -91,6 +91,7 @@ class Customer:
             if ShoppingCart.Items == x:
                 total = x.calcTotalCost()
                 print("1",total)
+                self.myTotal =sum(total)
                 return sum(total)
 
     #calculate club point for the current cart
@@ -103,7 +104,7 @@ class Customer:
     #update the total club point
     def updateClubPoint(self) -> None:
         prePoint = self.myClubPoint
-        print("preoint",prePoint  )
+        print("prepoint",prePoint  )
         updatePoint = self.calcClubPoint()
         print("wewewt",updatePoint  )
         totalPoint = prePoint + updatePoint
@@ -111,15 +112,11 @@ class Customer:
 
     #list the summary of all the previous transactions
     def custTrans(self) -> str:
-        for list in self.listCart:
-           return list
+        return str(self.CustomerName) + " " + str(self.myCardNumber) + " " + str(self.myTotal) + " \n   " + " ".join([str(cart) for cart in self.myCurrentCart])+ "\n"
 
     #List the details of all the previous transactions
     def custDetailTrans(self) -> str:
-        for list in self.listCart:
-            print 
-            print("listlistlistlistlistlistlistlist",list)
-            return self.CustomerName + " " + str(self.myCardNumber) + " " + str(self.myTotal) + " \n   " + str(list)
+        return str(self.CustomerName) + " " + str(self.myCardNumber) + " " + str(self.myTotal) + " \n   " + " ".join([str(cart) for cart in self.myCurrentCart])+ "\n"
 
 
     #average cart total 
