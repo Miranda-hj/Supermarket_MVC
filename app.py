@@ -11,7 +11,6 @@ market = Supermarket()
 app = Flask(__name__)
 
 
-
 @app.route('/')
 def superMarket():
     # read file
@@ -47,17 +46,13 @@ def startShopping():
     market.startShopping(cusName)
     return jsonify()
 
+
 @app.route('/customerInfo',methods = ['POST'])
 def customerInfo():
     customer = request.form['customerName']
     print(customer)
-    customerID = market.getCustomerID(customer)
-    customerClubPoint = market.getCustomerClubPoint(customer)
-    DetailTrans = market.getCustomerTransDetail(customer)
-    totalCost = market. getCustomerClubPoint(customer)*10
-    message = customer + " " +  str(customerID) + " " + str(customerClubPoint) + " " +  str(totalCost) + "\n   " + str(DetailTrans)
+    message = market.getCustomerTransDetail(customer)
     return jsonify({"message": message})
-
 
 @app.route('/addtoCart',methods = ['POST'])
 def addtoCart():
@@ -92,7 +87,7 @@ def checkOut():
 def salesByCustomer():
     detail = market.listCustomerTransaction()
     message = str(detail)
-    print('customer:',detail)
+    print('customer:',market.listCustomerTransaction())
     return jsonify({'message':message})
 
 @app.route('/totalSales',methods = ['POST'])

@@ -12,7 +12,7 @@ class ShoppingCart:
         self._shoppingDate = datetime.now().strftime('%m/%d/%Y %H:%M:%S')
         self._list = []
         self._totalCost = 0
-
+        
     #getter for purchase date
     @property
     def PurchaseDate(self) -> datetime:
@@ -33,7 +33,7 @@ class ShoppingCart:
     
     #represents the class object as a string
     def __str__(self) -> str:
-        return self._shoppingDate + " $"  + str(self._totalCost) + "  \n       " +  " ".join([str(item) for item in self._list]) + "\n"
+        return self._shoppingDate + " $"  + str(self._totalCost) + "\n\t" +  " ".join([str(item) for item in self._list]) + "\n"
 
     #adds unit item to the cart and returns the cost
     def addUnitItem(self, prod:str, uprice:float, qty:int) -> float:
@@ -61,5 +61,6 @@ class ShoppingCart:
 
     #calculate the total cost of the items in the cart
     def calcTotalCost(self) -> float:
+        print('totallllll!',self.cartTotal)
         return self.cartTotal
         

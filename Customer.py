@@ -7,11 +7,11 @@ class Customer:
     def __init__(self, cname:str) -> None:
         self.myCardNumber = Customer.NextID
         Customer.NextID += 1
-        self.myCurrentCart = []
+        self.myCurrentCart = None
         self.myName = cname
         self.myTotal = 0  
         self.myClubPoint = 0  # awards 1 point for each $10.00 spent at the supermarket.
-        self.listCart:List[ShoppingCart] =[]
+        self.listCart=[]
 
     #getter and setter for customer's name
     @property
@@ -53,32 +53,33 @@ class Customer:
 
     #represents the class object as a string
     def __str__(self) -> str:
-        return str(self.CustomerName) + " " + str(self.myCardNumber) + " " + str(self.myTotal) + " " + " ".join([str(cart) for cart in self.myCurrentCart])+ "\n"
+        return str(self.CustomerName) + " " + str(self.myCardNumber) + " " + str(self.myTotal) + " " + str(self.myCurrentCart) + "\n"
 
-    #add unit item to cart
-    def addUnitItemToCart(self, prod:str, uprice:float, qty:int):
-        s = ShoppingCart().addUnitItem(prod, uprice, qty)  
-        print('strstrstrs',s)
-        self.myCurrentCart.append(s)
-        print(self.myCurrentCart)
+    # #add unit item to cart
+    # def addUnitItemToCart(self, prod:str, uprice:float, ,):
+    #     s = ShoppingCart().addUnitItem(prod, uprice, qty)  
+    #     print('strstrstrs',s)
+    #     self.myCurrentCart.append(s)
+    #     print(self.myCurrentCart)
         
-    #add weight item to cart
-    def addWegihtItemToCart(self, prod:str, wprice:float):
-        w = ShoppingCart().addWeightItem(prod, wprice)
-        self.myCurrentCart.append(ShoppingCart())
-        return w
+    # #add weight item to cart
+    # def addItemToCart(self, prod:str, wprice:float, qty:int):
+    #     try 
+    #     w = ShoppingCart().addWeightItem(prod, wprice)
+    #     self.myCurrentCart.append(ShoppingCart())
+    #     return w
 
 
     #add current cart to the list of carts
     def addToCartList(self) -> None:
         print("print cart")
         self.listCart.append(self.myCurrentCart)
-        for x in self.listCart:
-            print(x)
 
     #calculate current cart cost 
     def calCurrentCost(self) -> float:
-        cost = ShoppingCart().calcTotalCost()
+        cost = self.CurrentCart.calcTotalCost()
+        self.myTotal = cost
+        print(self.myTotal,"123333333333333333333333333333")
         return cost 
 
     #update total purchase to date
@@ -88,7 +89,7 @@ class Customer:
         for x in self.listCart:
             print(x)
             print(self.listCart)
-            if ShoppingCart.Items == x:
+            if self.CurrentCart.Items == x:
                 total = x.calcTotalCost()
                 print("1",total)
                 self.myTotal =sum(total)
@@ -112,11 +113,19 @@ class Customer:
 
     #list the summary of all the previous transactions
     def custTrans(self) -> str:
-        return str(self.CustomerName) + " " + str(self.myCardNumber) + " " + str(self.myTotal) + " \n   " + " ".join([str(cart) for cart in self.myCurrentCart])+ "\n"
+        detailList = ""
+        for cList in self.listCart:
+            listDetail = detailList + str(cList)
+        print('listtttt',listDetail)
+        return str(self.CustomerName) + " " + str(self.myCardNumber) + " " + str(self.myTotal) + " \n " + " " + listDetail + "\n"
 
     #List the details of all the previous transactions
     def custDetailTrans(self) -> str:
-        return str(self.CustomerName) + " " + str(self.myCardNumber) + " " + str(self.myTotal) + " \n   " + " ".join([str(cart) for cart in self.myCurrentCart])+ "\n"
+        detailList = ""
+        for cList in self.listCart:
+            listDetail = detailList + " " + str(cList)
+        print('listtttt',listDetail)
+        return str(self.CustomerName) + " " + str(self.myCardNumber) + " " + str(self.myTotal) + " \n " + " " + listDetail + "\n"
 
 
     #average cart total 

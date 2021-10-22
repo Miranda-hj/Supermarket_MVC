@@ -54,38 +54,36 @@ class Supermarket:
     # adds unit item to the customer's current cart
     def addCustUnitItem(self,cname:str, prod:str, price:float, qty:int) -> float:
         customer = self.findCustomer(cname)
-        customer.addUnitItemToCart(prod, price, qty)
+        customer.CurrentCart.addUnitItem(prod, price, qty)
         print('tttttttttttttttttttt',Customer(customer))
 
     # adds weight item to the custoer's current cart and returns the weight
     def addCustWeightItem(self, cname:str, prod:str, price:float) -> float:
         customer = self.findCustomer(cname)
-        weight = customer.addWegihtItemToCart(prod,price) / price
+        weight = ShoppingCart().addWeightItem(prod, price) / price
         weightItem = round(weight,2)
         print("123",weightItem)
         return weightItem
-        
 
     # calculates customer's current cart total
     def calcCustCartTotal(self, cname:str) -> float:
         customer = self.findCustomer(cname)
-        x = customer.calCurrentCost()
-        print('customer detail~~~~~~~~~~',x)
-        print('bbbbbbbbbbbbbbbb',Customer(customer))
+        totalCost = customer.calCurrentCost()
+        return totalCost
 
     # adds the current cart to the customer's cart list
     def addCustCart(self, cname:str) -> None:
         customer = self.findCustomer(cname)
         print(customer)
         customer.addToCartList()
+        customer.updateTotal()
         print("22222222222")
 
     # customer starts shopping with an empty cart
     def startShopping(self, cname:str) -> None:
         customer = self.findCustomer(cname)
         print('shopping',customer)
-        customer.CurrentCart
-        print('cart !')
+        customer.myCurrentCart = ShoppingCart()
 
     #calculates total sales for the supermarket
     def calcTotalSales(self) -> float:
@@ -99,12 +97,13 @@ class Supermarket:
 
     # gets the list of customers and their transactions 
     def listCustomerTransaction(self) -> str:
-        print("12222222",self.customerList)
+        print('sssssssssssssssssssssssss',self.customerList)
+        detailList = ""
         for customer in self.customerList:
-            print(customer)
-            list = customer.custDetailTrans()
-            print(list)
-            return list
+            print(customer,'wwwwwwwwwwwwww')
+            detailList = detailList + customer.custTrans() + "/n"
+            print(type(detailList))
+            return detailList
 
     #finds customer with the most purchase
     def findTopCustomer(self) -> str:
@@ -117,7 +116,10 @@ class Supermarket:
     # displays transaction details for a customer
     def getCustomerTransDetail(self, cname:str) -> str:
         customer = self.findCustomer(cname)
-        customer.custDetailTrans()
+        ww = customer.myTotal
+        print("1111111111111111",ww)
+        cusDetail = customer.custDetailTrans()
+        return cusDetail
 
     def displayMonthlyCost(self):
         pass
