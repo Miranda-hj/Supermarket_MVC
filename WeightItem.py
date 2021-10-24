@@ -24,11 +24,7 @@ class WeightItem(Item):
 
     #represents the class object as a string
     def __str__(self) -> str:
-        return self._myProdName + " $" + str(self._myPrice) + " " + str(self._myWeight) + " $" + str(self._myWeight * self._myPrice)
-
-    #display the item information
-    def displayWeightItem(self) -> str:
-        return self._myProdName + " " + str(self._myPrice) + " " + str(self._myWeight) + " " + str(self._myWeight * self._myPrice)
+        return self._myProdName + " $" + str(self._myPrice) + " " + str(self._myWeight) + " $" + str(round((self._myWeight * self._myPrice),2))
  
     #method to generate random number between 0.0 and 4.0
     def scale (self) -> float:

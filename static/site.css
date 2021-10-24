@@ -9,7 +9,7 @@
 }
 
 div {
-	padding: 15px;
+	padding: 11px;
 }
 
 h1 {
@@ -22,7 +22,7 @@ h1 {
 }
 
 #cardNum {
-	padding-left: 37%;
+	padding-left: 40%;
 }
 
 #unit {
@@ -68,7 +68,7 @@ button {
 }
 
 #weightItem {
-	width: 24%;
+	width: 22%;
 	margin-left: 6%;
 }
 
@@ -91,6 +91,10 @@ button {
 	width: 120%;
 }
 
+#btnCheckOut {
+	padding-left: 59px;
+}
+
 #checkDisplay {
 	resize: none;
 	width: 310px;
@@ -101,7 +105,7 @@ button {
 	margin: 5px 0px 0px 7px;
 	width: 97%;
 	height: 81px;
-	resize: none;
+	resize: vertical;
 }
 
 #messageBox {
