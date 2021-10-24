@@ -9,7 +9,7 @@ class ShoppingCart:
 
     #constructor
     def __init__(self) -> None:
-        self._shoppingDate = datetime.now().strftime('%m/%d/%Y %H:%M:%S')
+        self._shoppingDate = datetime.now().strftime('%y/%m/%Y %H:%M:%S')
         self._list = []
         self._totalCost = 0
         
@@ -33,34 +33,30 @@ class ShoppingCart:
     
     #represents the class object as a string
     def __str__(self) -> str:
-        return self._shoppingDate + " $"  + str(self._totalCost) + "\n\t" +  " ".join([str(item) for item in self._list]) + "\n"
+        return self._shoppingDate + " $"  + str(self._totalCost) + "\n\t" +  "".join([str(item) for item in self._list]) + "\n "
 
     #adds unit item to the cart and returns the cost
-    def addUnitItem(self, prod:str, uprice:float, qty:int) -> float:
+    def addUnitItem(self, prod:str, uprice:float, qty:int) -> str:
         item = UnitItem(prod,uprice,qty)
-        string = item.displayUnitItem()
-        print(string)
-        self._list.append(string)
+        self._list.append(item)
         cost = item.calcCost()
-        self._totalCost = self._totalCost + cost
-        print("total",self.cartTotal) 
-        print(self.__str__())
+        self._totalCost += cost
         return self.__str__()
 
     #adds weight item to the cart and returns the cost
-    def addWeightItem(self, prod:str, wprice:float) -> float:
+    def addWeightItem(self, prod:str, wprice:float) -> str:
         item = WeightItem(prod,wprice)
         item.scale()
         # weight = item.ProductWeight
         self._list.append(item)
         cost = round(item.calcCost(),2)
-        preCost = self.cartTotal
-        totalCost = preCost + cost
-        self.cartTotal = totalCost
+        self.cartTotal += cost
         return self.__str__()
 
     #calculate the total cost of the items in the cart
     def calcTotalCost(self) -> float:
-        print('totallllll!',self.cartTotal)
         return self.cartTotal
+
+    def summary(self) -> str:
+        return self._shoppingDate + " $"  + str(self._totalCost) + "\n "
         

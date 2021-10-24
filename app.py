@@ -3,6 +3,7 @@
 # from tkinter.messagebox import showinfo
 # from tkinter.constants import END, LEFT, TOP
 from flask import Flask, render_template,request,jsonify
+from flask.helpers import flash
 from Supermarket import Supermarket
 from Customer import Customer
 
@@ -17,7 +18,7 @@ def superMarket():
     try: 
         customerName = []
         customerNumberList = []
-        f_customer = open('./asessment_part_2/SUpermarket_MVC/Customers.txt','r')
+        f_customer = open('./Customers.txt','r')
         customer = f_customer.readlines()
         for name in customer:
             customerList = name.replace('\n', '')
@@ -29,7 +30,7 @@ def superMarket():
             customerNumberList.append(id) 
         f_customer.close()
     except:
-        print("Error")
+        print('Error, Make sure you have the correct Customer.py path')
     return render_template('supermarket.html', customerName = customerName, id = customerNumberList )
 
 
@@ -87,7 +88,6 @@ def checkOut():
 def salesByCustomer():
     detail = market.listCustomerTransaction()
     message = str(detail)
-    print('customer:',market.listCustomerTransaction())
     return jsonify({'message':message})
 
 @app.route('/totalSales',methods = ['POST'])
@@ -107,8 +107,10 @@ def averageCart():
 
 @app.route('/monthlyDisplay',methods = ['POST'])
 def monthlyDisplay():
-    market.displayMonthlyCost()
-    pass
+    selectMonth = str(request.form['month'])
+    print('month',selectMonth)
+    message = market.displayMonthlyCost(selectMonth)
+    return jsonify({'message':message})
 
 if __name__ == '__main__':
     Flask.run(app,debug=True)

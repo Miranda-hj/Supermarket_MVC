@@ -29,7 +29,7 @@
                     <div class="form-group" id="cardNum">
                         <label for="cardNumber">Card Number:</label>
                         {% if id %}
-                        <input type="text" name="cardNumber" id="cardNumber" value="{{id[0]}}" readonly>
+                        <input type="text" name="cardNumber" id="cardNumber" value="{{id[0]}}" disabled>
                         {% endif %}
                         </input>
                         <div>
@@ -62,19 +62,19 @@
                                 <label for="unitNumber">Number of Units: </label>
                                 <input type="number" id="unitNumber" min="1">
                                 <label for="pricePerUnit">Price of Unit: </label>
-                                <input type="number" step="0.01" min="0.00" id="pricePerUnit">
+                                <input type="number" step="0.01" min="1.00" id="pricePerUnit">
                             </fieldset>
                         </div>
                         <div id="weightItem">
                             <fieldset>
                                 <legend>Weight Item</legend>
                                 <label for="weightNumber">Total Weight: </label>
-                                <input type="number" id="weightNumber" readonly>
+                                <input type="number" id="weightNumber" disabled>
                                 <label for="pricePerKilo">Price of Kilo: </label>
-                                <input type="number" step="0.01" min="0.01" id="pricePerKilo">
+                                <input type="number" step="0.01" min="1.00" id="pricePerKilo">
                             </fieldset>
                         </div>
-                        <div id="btnCheckout">
+                        <div id="btnCheckOut">
                             <div id="classGroup">
                                 <button type="button" id="addCar">Add to Cart</button>
                                 <button type="button" id="newItem">New Item</button>
@@ -100,7 +100,6 @@
                     <legend id="messageBox">Message Box:</legend>
                     <textarea id="display" name="display" readonly></textarea>
                 </fieldset>
-
             </div>
         </form>
     </div>

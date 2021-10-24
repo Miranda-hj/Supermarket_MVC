@@ -1,7 +1,5 @@
 from Customer import Customer
 from ShoppingCart import ShoppingCart
-from UnitItem import UnitItem
-from WeightItem import WeightItem
 from typing import List
 
 class Supermarket:
@@ -37,33 +35,28 @@ class Supermarket:
     #get the current club points for a given customer
     def currentClubPoint(self,cname:str) ->int:
         customer = self.findCustomer(cname)
-        print(customer,"!!!!!!!!!!#")
         point = customer.calcClubPoint()
-        print('current!!!!!',point)
         return point
 
     # gets the club point for a selected customer 
     def getCustomerClubPoint(self, cname:str) -> int:
         customer = self.findCustomer(cname)
-        print(customer,"!@#")
         customer.updateClubPoint()
         point = customer.ClubPoint
-        print ("total @@@@@@@",point)
         return point
 
     # adds unit item to the customer's current cart
-    def addCustUnitItem(self,cname:str, prod:str, price:float, qty:int) -> float:
+    def addCustUnitItem(self,cname:str, prod:str, price:float, qty:int) -> None:
         customer = self.findCustomer(cname)
         customer.CurrentCart.addUnitItem(prod, price, qty)
-        print('tttttttttttttttttttt',Customer(customer))
 
     # adds weight item to the custoer's current cart and returns the weight
     def addCustWeightItem(self, cname:str, prod:str, price:float) -> float:
         customer = self.findCustomer(cname)
-        weight = ShoppingCart().addWeightItem(prod, price) / price
-        weightItem = round(weight,2)
-        print("123",weightItem)
-        return weightItem
+        customer.CurrentCart.addWeightItem(prod, price) 
+        for item in customer.CurrentCart._list:
+            weight = item._myWeight
+        return weight
 
     # calculates customer's current cart total
     def calcCustCartTotal(self, cname:str) -> float:
@@ -77,49 +70,63 @@ class Supermarket:
         print(customer)
         customer.addToCartList()
         customer.updateTotal()
-        print("22222222222")
 
     # customer starts shopping with an empty cart
     def startShopping(self, cname:str) -> None:
         customer = self.findCustomer(cname)
-        print('shopping',customer)
         customer.myCurrentCart = ShoppingCart()
 
     #calculates total sales for the supermarket
     def calcTotalSales(self) -> float:
-        print("debaugging")
+        totalCost = 0
         for customer in self.customerList:
-            print(customer)
-            cusName = Customer(customer)
-            totalSales = cusName.updateTotal()
-            print('3',totalSales)
-            return totalSales
+            sales = customer.myTotal
+            totalCost += sales
+        return totalCost
 
     # gets the list of customers and their transactions 
     def listCustomerTransaction(self) -> str:
-        print('sssssssssssssssssssssssss',self.customerList)
         detailList = ""
         for customer in self.customerList:
-            print(customer,'wwwwwwwwwwwwww')
-            detailList = detailList + customer.custTrans() + "/n"
-            print(type(detailList))
-            return detailList
+            detailList += customer.custTrans() + "\n"
+        return detailList
 
     #finds customer with the most purchase
     def findTopCustomer(self) -> str:
-        pass
+        topCost = []
+        for customer in self.customerList:
+            cost = customer.myTotal
+            topCost.append(cost)
+        maxPurchase = max(topCost)
+        for customer in self.customerList:
+            if customer.myTotal == maxPurchase:
+                cusDetail = customer.custDetailTrans()
+        return cusDetail
 
     # calculates the customer's cart average
-    def getCustAvg(self) -> float:
-        pass
-
+    def getCustAvg(self) -> str:
+        cusAugList = ""
+        for customer in self.customerList:
+            cusAverage = customer.cartAverage()
+            cusAugList += cusAverage + "\n\n"
+        return cusAugList
+        
     # displays transaction details for a customer
     def getCustomerTransDetail(self, cname:str) -> str:
         customer = self.findCustomer(cname)
-        ww = customer.myTotal
-        print("1111111111111111",ww)
         cusDetail = customer.custDetailTrans()
         return cusDetail
 
-    def displayMonthlyCost(self):
-        pass
+    #select customer total sales for month
+    def displayMonthlyCost(self, month:str) -> str: 
+        monthMessage = "Sales for Month: " + month + "\n"
+        totalCost = 0
+        for customer in self.customerList:
+            cart = customer.listCart
+            for shoppingCart in cart:
+                if shoppingCart._shoppingDate[3:10] == month:
+                    monthMessage += customer.__str__() + "\n"
+                    totalCost += shoppingCart.cartTotal  
+        return monthMessage + "Total: $" + str(totalCost)
+               
+           

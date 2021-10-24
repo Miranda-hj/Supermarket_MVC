@@ -1,4 +1,25 @@
 $(document).ready(function() {
+
+	$('div#transcation input').prop('disabled', true);
+	$('div#transcation button').prop('disabled', true);
+	$('div#weightItem').css('visibility', 'hidden');
+	$('div#unitItem').css('visibility', 'hidden');
+
+	$('#nextCustomer').click(function(){
+		$('#cardNumber').val('')
+		$('#checkDisplay').val('');
+		$('#weightNumber').val('');
+		$('#pricePerKilo').val('');
+		$('#unitNumber').val('');
+		$('#pricePerUnit').val('');
+		$('#ProdName').val('');
+		$('input[type="radio"]').prop('checked', false);
+		$('div#weightItem').css('visibility', 'hidden');
+		$('div#unitItem').css('visibility', 'hidden');
+		$('div#transcation input').prop('disabled', true);
+		$('div#transcation button').prop('disabled', true);
+	});
+	
 	$('input[type="radio"]').click(function() {
 		let inputValue = $(this).attr('value');
 		if (inputValue == 'Unit Item') {
@@ -10,14 +31,7 @@ $(document).ready(function() {
 		}
 	});
 
-	$('#nextCustomer').click(function() {
-		$('input').val('');
-		$('textarea').val('');
-		$('input[type="radio"]').prop('checked', false);
-		$('div#weightItem').css('visibility', 'visible');
-		$('div#unitItem').css('visibility', 'visible');
-	});
-
+	
 	$('#exit').click(function() {
 		window.close();
 	});
@@ -39,7 +53,11 @@ $(document).ready(function() {
 			$.ajax({
 				type: 'POST',
 				url: 'http://127.0.0.1:5000/startShopping',
-				data: { name: $('#customerName').val() }
+				data: { name: $('#customerName').val() },
+				success:function(){
+					$('div#transcation input').prop('disabled', false);
+					$('div#transcation button').prop('disabled', false);
+				}
 			});
 			event.preventDefault();
 		} else {
@@ -66,8 +84,8 @@ $(document).ready(function() {
 		$('#pricePerUnit').val('');
 		$('#ProdName').val('');
 		$('input[type="radio"]').prop('checked', false);
-		$('div#weightItem').show();
-		$('div#unitItem').show();
+		$('div#weightItem').css('visibility', 'hidden');
+		$('div#unitItem').css('visibility', 'hidden');
 	});
 
 	$('#addCar').click(function(event) {
@@ -86,6 +104,9 @@ $(document).ready(function() {
 				$('#checkDisplay').val(function(_, val) {
 					return val + data.message + '\n';
 				});
+			},
+			error: function(xhr, textStatus, errorThrown){
+				alert('Invalid Input')
 			}
 		});
 		event.preventDefault();
@@ -97,10 +118,15 @@ $(document).ready(function() {
 			url: 'http://127.0.0.1:5000/checkOut',
 			data: { name: $('#customerName').val() },
 			success: function(data) {
-				$('#cost').val('$ ' + data.totalCost);
-				$('#checkDisplay').val(function(_, val) {
-					return val + data.currentPoint + '\n' + data.TotalPoint + '\n';
-				});
+				if (data.totalCost !== 0) {
+					$('#cost').val('$ ' + data.totalCost);
+					$('#checkDisplay').val(function(_, val) {
+						return val + data.currentPoint + '\n' + data.TotalPoint + '\n';
+					});
+				}
+				else {
+					alert('Invalid Input')
+				}
 			}
 		});
 		event.preventDefault();
@@ -111,7 +137,7 @@ $(document).ready(function() {
 			type: 'POST',
 			url: 'http://127.0.0.1:5000/totalSales',
 			success: function(data) {
-				$('#display').val(data.total);
+				$('#display').val('Total Sales: $' + data.total);
 			}
 		});
 		event.preventDefault();
@@ -151,11 +177,14 @@ $(document).ready(function() {
 	});
 
 	$('#selectMonth').change(function(event) {
+		month = $('#selectMonth').val().split('-');
+		formatMonth = `${month[1]}/${month[0]}`;
 		$.ajax({
 			type: 'POST',
 			url: 'http://127.0.0.1:5000//monthlyDisplay',
+			data: {month: formatMonth},
 			success: function(data) {
-				$('#display').val('');
+				$('#display').val(data.message);
 			}
 		});
 		event.preventDefault();
