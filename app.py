@@ -1,7 +1,3 @@
-# import tkinter as tk
-# from tkinter import Frame, ttk
-# from tkinter.messagebox import showinfo
-# from tkinter.constants import END, LEFT, TOP
 from flask import Flask, render_template,request,jsonify
 from flask.helpers import flash
 from Supermarket import Supermarket
@@ -23,16 +19,15 @@ def superMarket():
         for name in customer:
             customerList = name.replace('\n', '')
             customerName.append(customerList)
-        print(customerName)
         for cName in customerName:
             market.addCustomer(cName)
             id = market.getCustomerID(cName)
             customerNumberList.append(id) 
         f_customer.close()
     except:
-        print('Error, Make sure you have the correct Customer.py path')
-    return render_template('supermarket.html', customerName = customerName, id = customerNumberList )
-
+        print('Error! Make sure the Customer.py path is correct!')
+    return render_template('supermarket.html', customerName = customerName, id = customerNumberList)
+    
 
 @app.route('/selectCustomer',methods = ['POST'])
 def selectCustomer():
